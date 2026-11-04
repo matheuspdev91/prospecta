@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospecta | Relatórios</title>
+    <link rel="stylesheet" href="{% static 'leads.css' %}">
+</head>
+
+<body>
+    <main class="main-content">
+        <header class="page-heading">
+            <div>
+                <div class="eyebrow">
+                    <span class="eyebrow-line"></span>
+                    SALES INTELLIGENCE
+                </div>
+                <h1>Relatórios<span>.</span></h1>
+                <p>Indicadores e desempenho da sua prospecção.</p>
+            </div>
+
+            <a class="btn-primary" href="{% url 'listar_leads' %}">
+                <span aria-hidden="true">◎</span>
+                Ver leads
+            </a>
+        </header>
+
+        <section class="metrics-grid" aria-label="Indicadores comerciais">
+            <article class="metric-card">
+                <div class="metric-top">
+                    <span class="metric-label">Total de leads</span>
+                    <span class="metric-icon">◎</span>
+                </div>
+                <div class="metric-value">{{ total_leads }}</div>
+                <div class="metric-foot">Empresas cadastradas</div>
+            </article>
+
+            <article class="metric-card">
+                <div class="metric-top">
+                    <span class="metric-label">Contatados</span>
+                    <span class="metric-icon">↗</span>
+                </div>
+                <div class="metric-value">{{ leads_contatados }}</div>
+                <div class="metric-foot">Leads abordados</div>
+            </article>
+
+            <article class="metric-card">
+                <div class="metric-top">
+                    <span class="metric-label">Em negociação</span>
+                    <span class="metric-icon">⇄</span>
+                </div>
+                <div class="metric-value">{{ leads_negociando }}</div>
+                <div class="metric-foot">Oportunidades em andamento</div>
+            </article>
+
+            <article class="metric-card">
+                <div class="metric-top">
+                    <span class="metric-label">Convertidos</span>
+                    <span class="metric-icon">✓</span>
+                </div>
+                <div class="metric-value">{{ leads_convertidos }}</div>
+                <div class="metric-foot">Clientes conquistados</div>
+            </article>
+        </section>
+
+        <section class="analytics-grid" aria-label="Análise comercial">
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Taxa de conversão</h2>
+                        <p>Percentual de leads convertidos sobre a base total.</p>
+                    </div>
+                </div>
+
+                <div class="conversion-content">
+                    <div class="conversion-number">
+                        {{ taxa_conversao }}<span>%</span>
+                    </div>
+                    <div class="conversion-track">
+                        <div class="conversion-fill" style="width: {{ taxa_conversao }}%;"></div>
+                    </div>
+                    <p>{{ leads_convertidos }} de {{ total_leads }} lead(s) convertidos.</p>
+                </div>
+            </article>
+
+            <article class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Visão geral do funil</h2>
+                        <p>Distribuição atual das oportunidades.</p>
+                    </div>
+                </div>
+
+                <div class="pipeline-list">
+                    {% for item in etapas %}
+                    <div class="pipeline-row">
+                        <div class="pipeline-info">
+                            <span>{{ item.rotulo }}</span>
+                            <strong>{{ item.total }}</strong>
+                        </div>
+                        <div class="pipeline-track">
+                            <div class="pipeline-fill" style="width: {{ item.percentual }}%;"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </article>
+        </section>
+
+        <section class="panel report-summary">
+            <div class="panel-heading">
+                <div>
+                    <h2>Resumo comercial</h2>
+                    <p>Situação atual da sua base de prospecção.</p>
+                </div>
+            </div>
+
+            <div class="report-summary-grid">
+                <div>
+                    <span>Leads perdidos</span>
+                    <strong>{{ leads_perdidos }}</strong>
+                </div>
+                <div>
+                    <span>Taxa de conversão</span>
+                    <strong>{{ taxa_conversao }}%</strong>
+                </div>
+            </div>
+
+            <a class="report-back-link" href="{% url 'dashboard' %}">
+                ← Voltar ao dashboard
+            </a>
+        </section>
+    </main>
+</body>
+
+</html>

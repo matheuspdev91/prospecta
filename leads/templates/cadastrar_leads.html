@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospecta | Cadastrar lead</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'leads.css' %}">
+</head>
+
+<body>
+    <main class="main-content">
+        <section class="page-heading">
+            <div>
+                <div class="eyebrow">SALES INTELLIGENCE</div>
+                <h1>Novo lead<span>.</span></h1>
+                <p>Cadastre uma nova oportunidade comercial.</p>
+            </div>
+        </section>
+
+        {% if messages %}
+        {% for message in messages %}
+        <p role="status">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <p>
+                <label for="empresa">Empresa *</label>
+                <input id="empresa" name="empresa" maxlength="150" required>
+            </p>
+
+            <p>
+                <label for="nome_contato">Nome do contato</label>
+                <input id="nome_contato" name="nome_contato" maxlength="150">
+            </p>
+
+            <p>
+                <label for="nicho">Nicho *</label>
+                <input id="nicho" name="nicho" maxlength="100" required>
+            </p>
+
+            <p>
+                <label for="cidade">Cidade *</label>
+                <input id="cidade" name="cidade" maxlength="100" required>
+            </p>
+
+            <p>
+                <label for="telefone">Telefone</label>
+                <input id="telefone" name="telefone" maxlength="30">
+            </p>
+
+            <p>
+                <label for="site_atual">Site atual</label>
+                <input id="site_atual" name="site_atual" type="url">
+            </p>
+
+            <p>
+                <label for="oportunidade">Oportunidade identificada *</label>
+                <textarea id="oportunidade" name="oportunidade" required></textarea>
+            </p>
+
+            <button type="submit">Cadastrar lead</button>
+            <a href="{% url 'dashboard' %}">Cancelar</a>
+        </form>
+    </main>
+</body>
+
+</html>
